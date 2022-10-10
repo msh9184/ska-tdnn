@@ -1,7 +1,6 @@
 # SKA-TDNN
 
 <img src="./img/overview.png" width="800">
-<br/><br/>
 
 This repository is the implementation of the paper "[Frequency and Multi-Scale Selective Kernel Attention for Speaker Verification](https://arxiv.org/abs/2204.01005)," which is to be published in *Proc. IEEE SLT 2022*. The code is developed based on the [voxceleb_trainer](https://github.com/joonson/voxceleb_unsupervised).
 
