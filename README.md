@@ -113,10 +113,10 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 python trainSpeakerNet.py \
 ## Citation
 If you utilize this repository, please cite the following paper,
 ```
-@article{mun2022frequency,
+@inproceedings{mun2022frequency,
   title={Frequency and Multi-Scale Selective Kernel Attention for Speaker Verification},
   author={Mun, Sung Hwan and Jung, Jee-weon and Han, Min Hyun and Kim, Nam Soo},
-  journal={arXiv preprint arXiv:2204.01005},
+  booktitle={Proc. IEEE SLT},
   year={2022}
 }
 ```
