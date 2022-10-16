@@ -28,6 +28,15 @@ id09272/u7VNkYraCw0/00027.wav id09272
 ```
 The example files of train list for VoxCeleb2 and the test lists for VoxCeleb1-O, VoxCeleb1-E, VoxCeleb1-H can be download from [train_vox2.txt](https://drive.google.com/file/d/1Y6yjKDULxJ40mhLzeKUzkeAvqNlP0tzX/view?usp=sharing) and [veri_test2.txt](https://drive.google.com/file/d/1EUDR5oCPC-zOexhLBHbFQpdnw1IRWq-B/view?usp=sharing), [list_test_all2](https://drive.google.com/file/d/1BgnEugORlSPsi4ZpTjTayAGPqyWTm7S8/view?usp=sharing), [list_test_hard2](https://drive.google.com/file/d/1p-gbPbDK4dy_SvSRWZ3KP17iZdHqjHQ4/view?usp=sharing), respectively. You can also follow the instructions on the [voxceleb_trainer](https://github.com/clovaai/voxceleb_trainer) repository for the download and data preparation of training, augmentation, and evaluation.
 
+For the data augmentation of noise addition, you can download the [MUSAN noise corpus](https://www.openslr.org/17/).
+After downloading and extracting the files, you can split the audio files into short segments for faster random access as the following command:
+```bash
+python process_musan.py /path/to/dataset/MUSAN
+```
+where `/path/to/dataset/MUSAN` is your path to the MUSAN corpus.
+
+For the data augmentation of convolution with simulated RIRs, you can download the [Room Impulse Response and Noise Database](https://www.openslr.org/28/).
+
 
 ## Training
 Distributed Data Parallel (DDP) training example: SKA_TDNN with a vanilla cosine similarity (COS) evaluation every epoch,
