@@ -184,6 +184,7 @@ class train_dataset_sampler(torch.utils.data.Sampler):
         self.epoch = 0
         self.seed = seed
         self.distributed = distributed
+        self.batch_size = num_utt * num_spk
         
     def __iter__(self):
         g = torch.Generator()
@@ -216,14 +217,26 @@ class train_dataset_sampler(torch.utils.data.Sampler):
         mixlabel = []
         mixmap = []
 
-        ## Prevent two pairs of the same speaker in the same batch
-        for ii in mixid:
-            startbatch = round_down(len(mixlabel), self.num_spk)
-            if self.num_utt != 1:
-                if flattened_label[ii] not in mixlabel[startbatch:]:
-                    mixlabel += [flattened_label[ii]]
-                    mixmap += [ii]
-            else:
+        ## Reduce data waste referred from https://github.com/clovaai/voxceleb_trainer/pull/136/files
+        resmixid = []
+        mixlabel_ins = 1
+
+        if self.num_utt != 1:
+            while len(mixid) > 0 and mixlabel_ins > 0:
+                mixlabel_ins = 0
+                for ii in mixid:
+                    startbatch = round_down(len(mixlabel), self.num_spk)
+                    if flattened_label[ii] not in mixlabel[startbatch:]:
+                        mixlabel += [flattened_label[ii]]
+                        mixmap += [ii]
+                        mixlabel_ins += 1
+                    else:
+                        resmixid += [ii]
+                mixid = resmixid
+                resmixid = []
+        else:
+            for ii in mixid:
+                startbatch = round_down(len(mixlabel), self.num_spk)
                 mixlabel += [flattened_label[ii]]
                 mixmap += [ii]
         mixed_list = [flattened_list[i] for i in mixmap]

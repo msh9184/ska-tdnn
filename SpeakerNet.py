@@ -55,7 +55,7 @@ class ModelTrainer(object):
 
         self.scaler = GradScaler() 
         self.gpu = gpu
-        self.ngpu = int(torch.cuda.device_count())
+        self.ngpu = int(torch.cuda.device_count()) if kwargs.pop('distributed') else 1 # DDP or Not
         self.ndistfactor = int(kwargs.pop('num_utt') * self.ngpu)
         self.swa = kwargs.pop('swa')
         self.swa_start = int(kwargs.pop('swa_start'))
